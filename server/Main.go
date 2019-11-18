@@ -11,6 +11,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 )
 
 func main() {
@@ -99,6 +100,7 @@ func downloadFile(c *gin.Context){
 
 	frs := folderRoot()+fs.Fs
 	fr,err := os.Open(frs)
+	defer fr.Close()
 	panicErr(err)
 	w := c.Writer
 	iou,err := ioutil.ReadAll(fr)
@@ -244,6 +246,12 @@ func uploadHandler(c *gin.Context){
 
 //写入到文件
 func writeToFile(fw string,fr multipart.File){
+	//创建文件夹
+	last := strings.LastIndex(fw,string(os.PathSeparator))
+	dir := fw[:last]
+	err := os.MkdirAll(dir,os.ModePerm)
+	panicErr(err)
+
 	f,err := os.Create(fw)
 	defer f.Close()
 	panicErr(err)
