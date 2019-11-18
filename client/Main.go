@@ -11,6 +11,7 @@ import (
 	"mime/multipart"
 	"net/http"
 	"os"
+	"path/filepath"
 	"runtime"
 	"strings"
 )
@@ -119,7 +120,7 @@ func Handler(){
 			os.Exit(0)
 		}else if str == "sendFile" {
 			sendFile(bio)
-		}else if str == "queryFile"{
+		}else if str == "file"{
 			queryFile(bio)
 		}else{
 			fmt.Println("不认识的命令ლ(′◉❥◉｀ლ)")
@@ -164,7 +165,7 @@ func queryFile(bio *bufio.Reader){
 			cd xx 进入指定文件夹
 			..		退回上级文件夹
 			cp aa bb	下载aa到本地的bb目录下(bb为绝对地址)
-			up aa bb	上传aa到远程的bb目录下(aa为绝对地址,如果打算上传到当前的文件夹,可以省略bb不写)
+			up aa	上传aa到远程的当前目录下(aa为绝对地址)
 		`)
 		//打印字符串,例如:>/>
 		//中间这个符号就是fq.Path的值
@@ -199,12 +200,10 @@ func queryFile(bio *bufio.Reader){
 				}
 			}else if strArr[0] == "up" {
 				//up命令
-				if len(strArr) == 3{
-					//ExecuteUploadFile()
-				}else if len(strArr) == 2 {
-
+				if len(strArr) == 2{
+					ExecuteUploadFile(fq.Path,strArr[1])
 				}else {
-					fmt.Println("命令错误,up命令后面至少有一个,最多有两个参数")
+					fmt.Println("命令错误,up命令后面只能有一个参数")
 				}
 			}else{
 				fmt.Println("不认识的命令ლ(′◉❥◉｀ლ)")
@@ -217,10 +216,65 @@ func queryFile(bio *bufio.Reader){
 执行上传文件任务
 第一个参数,环境当前的远程文件夹路径
 第二个参数,要上传的本机文件路径(可以是文件夹)
-第三个参数,远程服务器的目标路径
  */
-func ExecuteUploadFile(currentPath string,){
+func ExecuteUploadFile(currentPath string,absolutePath string){
+	np := PathStringReplacement(absolutePath,NativePathSeparator)
+	currentPath = PathStringReplacement(currentPath,ServerPathSeparator)
+	fi,err := os.Stat(np)
+	panicErr(err)
+	if fi.IsDir() {
+		fileMap := make(map[string]string,0)
+		//是文件夹的处理
+		filepath.Walk(np, func(path string, info os.FileInfo, err error) error {
+			fileMap = ProcessingFolder(path, absolutePath, currentPath)
+			return nil
+		})
+		if len(fileMap) != 0 {
+			ExecuteMultipleFileUpload(fileMap)
+		}
+	} else {
+		last := strings.LastIndex(np, NativePathSeparator)
+		snp := PathStringReplacement(np[last:], ServerPathSeparator)
+		fileMap := make(map[string]string,0)
+		fileMap[currentPath+snp] = np
+		ExecuteMultipleFileUpload(fileMap)
+	}
+}
 
+/**
+处理文件信息,将非文件夹的路径整理起来,放到一个map里去.
+map的key是服务器路径格式的环境当前的远程文件夹路径
+value是本机的绝对路径
+ */
+func ProcessingFolder(path string, absolutePath string, currentPath string) map[string]string{
+	fileMap := make(map[string]string,0)
+	strArr := strings.Split(path, absolutePath)
+	if strArr[1] != "" {
+		rp := strArr[1]
+		last := strings.LastIndex(rp, NativePathSeparator)
+		b := strings.Contains(rp[last:], ".")
+		if b {
+			sp := PathStringReplacement(strArr[1], ServerPathSeparator)
+			fileMap[currentPath+sp] = path
+		}
+	}
+	return fileMap
+}
+
+/**
+执行多文件上传任务
+*/
+func ExecuteMultipleFileUpload(fileMap map[string]string){
+	resp,err := MultipleFileUpload(UploadFiles,fileMap)
+	panicErr(err)
+	var ds DirectorySlice
+	BodyToStruct(resp.Body,&ds)
+	if  ds.Success == false{
+		fmt.Println("以下文件重名了!")
+		for _,v := range ds.Message{
+			fmt.Println(v)
+		}
+	}
 }
 
 /**
@@ -485,6 +539,29 @@ func multipartBuffer()(*multipart.Writer,*bytes.Buffer){
 	return writer,buf
 }
 
+/**
+Multiple多文件上传
+参数是一个map,key是上传文件到服务器时,提交给服务器的文件路径
+value是该文件在本地的绝对路径
+ */
+func MultipleFileUpload(urlAddress string,fileMap map[string]string)(*http.Response,error){
+	writer,buf := multipartBuffer()
+	for k,v := range fileMap{
+		w,err := writer.CreateFormFile("files",k)
+		panicErr(err)
+
+		f,err := os.Open(v)
+		panicErr(err)
+		defer f.Close()
+
+		_,err = io.Copy(w,f)
+		panicErr(err)
+	}
+
+	writer.Close()
+	return http.Post(urlAddress,writer.FormDataContentType(),buf)
+}
+
 //处理发送文件指令
 func sendFile(bio *bufio.Reader){
 	writer,buf := multipartBuffer()
@@ -565,7 +642,7 @@ func writeBuffer(writer *multipart.Writer,filePath string){
 	go writeOut(fw,filePath)
 }
 
-//读取filePath路径的文件,然后写入到writer里,最后写入边界
+//读取filePath路径的文件,然后写入到writer里
 func writeOut(writer io.Writer,filePath string){
 	file,err := os.Open(filePath)
 	defer file.Close()
@@ -630,7 +707,7 @@ func cmdInit(){
 			cpu 当前机器的型号
 			end 结束终端
 			sendFile 发送文件
-			queryFile 查询服务器共享文件
+			file 文件处理相关操作
 	`)
 }
 
