@@ -42,13 +42,52 @@ var(
 	本机路径分隔符
 	 */
 	NativePathSeparator string
+
+	/**
+   服务器地址
+	*/
+	ServerAddress string = "http://localhost:8080"
+	/**
+	获取服务器系统信息
+	 */
+	SytemInfo string = ServerAddress + "/info"
+
+	/**
+	下载文件
+	 */
+	DownloadFile string = ServerAddress + "/downloadFile"
+
+	/**
+	查询本地file根目录
+	 */
+	QueryFileRoot string = ServerAddress + "/queryFileRoot"
+
+	/**
+	查询文件是否是文件夹,如果是,就返回遍历后的文件路径切片
+	 */
+	QueryDir string = ServerAddress + "/queryDir"
+
+	/**
+	查询文件目录
+	 */
+	QueryFile string = ServerAddress + "/queryFile"
+
+	/**
+	上传文件,支持多文件
+	 */
+	UploadFiles string = ServerAddress + "/uploadFiles"
+
+	/**
+	json格式字符串
+	 */
+	JsonRequest string = "application/json"
 )
 
 //环境准备
 func EnvironmentalPreparation(){
 	NativePathSeparator = string(os.PathSeparator)
 	//获得服务器操作系统名字
-	resp,err := http.Get("http://localhost:8080/info")
+	resp,err := http.Get(SytemInfo)
 	panicErr(err)
 	var m Msg
 	BodyToStruct(resp.Body,&m)
@@ -125,6 +164,7 @@ func queryFile(bio *bufio.Reader){
 			cd xx 进入指定文件夹
 			..		退回上级文件夹
 			cp aa bb	下载aa到本地的bb目录下(bb为绝对地址)
+			up aa bb	上传aa到远程的bb目录下(aa为绝对地址,如果打算上传到当前的文件夹,可以省略bb不写)
 		`)
 		//打印字符串,例如:>/>
 		//中间这个符号就是fq.Path的值
@@ -157,11 +197,30 @@ func queryFile(bio *bufio.Reader){
 				} else {
 					fmt.Println("命令错误,cp命令后面应该跟两个参数")
 				}
+			}else if strArr[0] == "up" {
+				//up命令
+				if len(strArr) == 3{
+					//ExecuteUploadFile()
+				}else if len(strArr) == 2 {
+
+				}else {
+					fmt.Println("命令错误,up命令后面至少有一个,最多有两个参数")
+				}
 			}else{
 				fmt.Println("不认识的命令ლ(′◉❥◉｀ლ)")
 			}
 		}
 	}
+}
+
+/**
+执行上传文件任务
+第一个参数,环境当前的远程文件夹路径
+第二个参数,要上传的本机文件路径(可以是文件夹)
+第三个参数,远程服务器的目标路径
+ */
+func ExecuteUploadFile(currentPath string,){
+
 }
 
 /**
@@ -235,27 +294,43 @@ DestinationPath为下载到本地机器的绝对路径
 func DownloadToLocal(path string,DestinationPath string){
 	var fs FileString
 	fs.Fs = path
-	resp, err := http.Post("http://localhost:8080/downloadFile", "application/json", InterfaceToJson(fs))
+	resp, err := http.Post(DownloadFile, JsonRequest, InterfaceToJson(fs))
 	panicErr(err)
+	defer resp.Body.Close()
 
-	//创建文件夹
-	last := strings.LastIndex(DestinationPath,NativePathSeparator)
-	newDirString := DestinationPath[:last]
-	err = os.MkdirAll(newDirString,os.ModePerm)
-	panicErr(err)
+	//根据路径处理文件下载
+	ProcessingFileInformation(DestinationPath,resp.Body)
+}
 
-	//创建文件,并返回文件描述符供于写入
-	f,err := os.Create(DestinationPath)
-	panicErr(err)
-	defer f.Close()
+/**
+创建文件夹,如果路径末尾有后缀,就创建文件夹并写入文件,如果没有后缀,就只创建文件夹
+例子1 c:/echat/abc/test.txt 创建文件夹c:/echat/abc,并在当前文件夹下写入test.txt文件
+例子2 c:/echat/abc 创建文件夹c:/echat/abc
+ */
+func ProcessingFileInformation(path string,body io.Reader){
+	last := strings.LastIndex(path,NativePathSeparator)
+	if strings.Contains(path[last:],".") {
+		//路径最后是有后缀的
+		newDirString := path[:last]
+		err := os.MkdirAll(newDirString,os.ModePerm)
+		panicErr(err)
+		//创建文件,并返回文件描述符供于写入
+		f,err := os.Create(path)
+		panicErr(err)
+		defer f.Close()
 
-	_,err = io.Copy(f,resp.Body)
-	panicErr(err)
+		_,err = io.Copy(f,body)
+		panicErr(err)
+	}else{
+		//没有后缀
+		err := os.MkdirAll(path,os.ModePerm)
+		panicErr(err)
+	}
 }
 
 //获取服务器file根目录
 func getServerRootDirectory()ServerRootName{
-	resp, err := http.Get("http://localhost:8080/queryFileRoot")
+	resp, err := http.Get(QueryFileRoot)
 	panicErr(err)
 	var srn ServerRootName
 	BodyToStruct(resp.Body, &srn)
@@ -281,7 +356,7 @@ func QueryDirectoryInformation(targetPath string, currentPath string) DirectoryS
 	fs.Fs = path
 	b := InterfaceToJson(fs)
 	//作为一个结构体发送给服务器
-	resp, err := http.Post("http://localhost:8080/queryDir", "application/json", b)
+	resp, err := http.Post(QueryDir, JsonRequest, b)
 	panicErr(err)
 	var ds DirectorySlice
 	//解析返回的json字符串,并包装为结构体作为返回值返回
@@ -385,7 +460,7 @@ func BodyToStruct(respBody io.ReadCloser,v interface{}){
 //查询文件发送post请求
 func QueryFileSending(fq FileQuery)FileQueryResp{
 	b := InterfaceToJson(fq)
-	resp,err := http.Post("http://localhost:8080/queryFile","application/json",b)
+	resp,err := http.Post(QueryFile,JsonRequest,b)
 	panicErr(err)
 
 	var fqr FileQueryResp
@@ -428,7 +503,7 @@ func sendFile(bio *bufio.Reader){
 		str := readLine(bio)
 		if str == "run()"{
 			writer.Close()
-			resp,err := http.Post("http://localhost:8080/uploadFiles",writer.FormDataContentType(),buf)
+			resp,err := http.Post(UploadFiles,writer.FormDataContentType(),buf)
 			panicErr(err)
 			handlingFileUploadResponses(resp)
 			quit = true
