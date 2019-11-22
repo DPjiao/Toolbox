@@ -38,6 +38,15 @@ func folderName()string{
 	return fp
 }
 
+func AbsoluteAddress(relativeAddress string)string{
+	path := folderName()
+	if relativeAddress[0] == os.PathSeparator{
+		return path + relativeAddress
+	}else{
+		return path + string(os.PathSeparator) + relativeAddress
+	}
+}
+
 //获取文件夹根部,后缀为路径分隔符,要新建文件或者文件夹只需要往后面添加标识符就行了.
 func folderRoot()string{
 	return folderName() + string(os.PathSeparator)
@@ -86,6 +95,19 @@ func exists(path string) bool {
 	}
 }
 
+/**
+判断一个路径是否是文件夹
+ */
+func isDir(path string)bool{
+	f,err := os.Stat(path)
+	panicErr(err)
+	if f.IsDir() {
+		return true
+	}else {
+		return false
+	}
+}
+
 //文件下载相关请求的结构体
 type FileString struct {
 	Fs string `json:"fs"`
@@ -127,8 +149,26 @@ func HandlerFiles(){
 	hl.GET("/queryFileRoot",queryFileRoot)
 	//获取服务器系统信息
 	hl.GET("/info",info)
+	//删除文件或者文件夹
+	hl.POST("/deleteFile",deleteFile)
 
 	http.ListenAndServe(":8080",hl)
+}
+
+/**
+删除文件或者文件夹
+ */
+func deleteFile(c *gin.Context){
+	var fp FileQuery
+	c.BindJSON(&fp)
+
+	aa := AbsoluteAddress(fp.Path)
+	err := os.RemoveAll(aa)
+	panicErr(err)
+
+	c.JSON(http.StatusOK,gin.H{
+		"msg":"删除成功",
+	})
 }
 
 //获取服务器系统信息
@@ -191,16 +231,25 @@ func queryFile(c *gin.Context){
 	var fq FileQuery
 	c.BindJSON(&fq)
 
-	files,err := ioutil.ReadDir(folderName()+fq.Path)
-	panicErr(err)
-	resp := make([]string,len(files))
-	for _,v := range files{
-		resp = append(resp,v.Name())
-	}
+	path := folderName()+fq.Path
+	if isDir(path) {
+		files,err := ioutil.ReadDir(path)
+		panicErr(err)
+		resp := make([]string,len(files))
+		for _,v := range files{
+			resp = append(resp,v.Name())
+		}
 
-	c.JSON(http.StatusOK,gin.H{
-		"dirList":resp,
-	})
+		c.JSON(http.StatusOK,gin.H{
+			"success":true,
+			"dirList":resp,
+		})
+	}else{
+		c.JSON(http.StatusOK,gin.H{
+			"success":false,
+			"dirList":nil,
+		})
+	}
 }
 
 //处理文件上传,可以多文件
