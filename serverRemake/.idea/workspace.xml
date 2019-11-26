@@ -2,28 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="87bd1559-1c85-4252-b925-7634cf416918" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../clientRemake/Main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../clientRemake/util/data.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../clientRemake/util/file.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../clientRemake/view/cmd.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/serverRemake.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Main_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/configuration/ConfigurationQueue.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/dataConversion.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/dataHandler.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/filePath.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../client/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/cmdFile.go" beforeDir="false" afterPath="$PROJECT_DIR$/../client/cmdFile.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../server/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/Main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../server/Main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../clientRemake/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../clientRemake/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.go" beforeDir="false" afterPath="$PROJECT_DIR$/Main.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,20 +13,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="273" column="24" selection-start-line="273" selection-start-column="24" selection-end-line="273" selection-end-column="24" />
+            <state relative-caret-position="323">
+              <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/configuration/ConfigurationQueue.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="143" column="40" lean-forward="true" selection-start-line="143" selection-start-column="40" selection-end-line="143" selection-end-column="40" />
+            <state relative-caret-position="2679">
+              <caret line="147" column="31" lean-forward="true" selection-start-line="147" selection-start-column="31" selection-end-line="147" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -141,9 +121,9 @@
         <option value="$PROJECT_DIR$/TestMain.go" />
         <option value="$PROJECT_DIR$/Main_test.go" />
         <option value="$PROJECT_DIR$/util/dataConversion.go" />
-        <option value="$PROJECT_DIR$/Main.go" />
         <option value="$PROJECT_DIR$/configuration/ConfigurationQueue.go" />
         <option value="$PROJECT_DIR$/ToolboxConfig.json" />
+        <option value="$PROJECT_DIR$/Main.go" />
       </list>
     </option>
   </component>
@@ -193,7 +173,7 @@
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Project.GOPATH.is.expanded" value="true" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
-    <property name="last_opened_file_path" value="E:/go_demo/test" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../clientRemake" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -259,7 +239,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.121313676" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.122654155" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -372,6 +352,9 @@
     <entry file="file://$PROJECT_DIR$/2019-11-25-17-16-57.log" />
     <entry file="file://$PROJECT_DIR$/2019-11-25-17-23-32.log" />
     <entry file="file://$PROJECT_DIR$/2019-11-25-18-06-19.log" />
+    <entry file="file://$PROJECT_DIR$/ToolboxConfig.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/util/dataConversion.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
@@ -406,20 +389,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Main.go">
+    <entry file="file://$PROJECT_DIR$/configuration/ConfigurationQueue.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="273" column="24" selection-start-line="273" selection-start-column="24" selection-end-line="273" selection-end-column="24" />
+        <state relative-caret-position="2679">
+          <caret line="147" column="31" lean-forward="true" selection-start-line="147" selection-start-column="31" selection-end-line="147" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ToolboxConfig.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/configuration/ConfigurationQueue.go">
+    <entry file="file://$PROJECT_DIR$/Main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="143" column="40" lean-forward="true" selection-start-line="143" selection-start-column="40" selection-end-line="143" selection-end-column="40" />
+        <state relative-caret-position="323">
+          <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
         </state>
       </provider>
     </entry>

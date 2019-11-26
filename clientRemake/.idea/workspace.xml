@@ -2,28 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e12d75f1-b562-4711-8775-2e9bd28a0caa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/data.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/file.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/view/cmd.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../serverRemake/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../serverRemake/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../serverRemake/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../serverRemake/.idea/serverRemake.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../serverRemake/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../serverRemake/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../serverRemake/Main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../serverRemake/Main_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../serverRemake/configuration/ConfigurationQueue.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../serverRemake/go.mod" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../serverRemake/util/dataConversion.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../serverRemake/util/dataHandler.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../serverRemake/util/filePath.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../client/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/cmdFile.go" beforeDir="false" afterPath="$PROJECT_DIR$/../client/cmdFile.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../server/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/Main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../server/Main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../serverRemake/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../serverRemake/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../serverRemake/Main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../serverRemake/Main.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +17,7 @@
         <entry file="file://$PROJECT_DIR$/Main.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="331">
-              <caret line="270" column="3" lean-forward="true" selection-start-line="270" selection-start-column="3" selection-end-line="270" selection-end-column="3" />
+              <caret line="270" column="3" selection-start-line="270" selection-start-column="3" selection-end-line="270" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -165,7 +145,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -191,6 +170,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -199,7 +179,7 @@
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Project.GOPATH.is.expanded" value="true" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../serverRemake" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -237,7 +217,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27546915" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27949062" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -283,7 +263,7 @@
     <entry file="file://$PROJECT_DIR$/Main.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="331">
-          <caret line="270" column="3" lean-forward="true" selection-start-line="270" selection-start-column="3" selection-end-line="270" selection-end-column="3" />
+          <caret line="270" column="3" selection-start-line="270" selection-start-column="3" selection-end-line="270" selection-end-column="3" />
         </state>
       </provider>
     </entry>
