@@ -1,0 +1,20 @@
+server
+新建一个本地配置文件(ToolboxConfig.json)
+文件结构:
+{
+	"file":[
+		{
+			"filepath":"/xxx/xxx/xx.xx",
+			"md5Array":[
+				"xxxxxxx",
+				"xxxxxxx",
+				"xxxxxxx"
+			],
+			"ready":"上传已完成"
+		}
+	]
+}
+新建一个系统日志文件,log.Print专用
+新建一个file文件夹,用来装以MD5做文件名的文件块
+client
+新建一个工作日志文件,主要用来记录下载进度的相关工作
